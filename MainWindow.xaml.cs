@@ -1,6 +1,6 @@
-﻿/*Sebastian Horton
+/*Sebastian Horton 
 March 1st, 2019
-The User inputs an email and has it converted to a hotmail acount
+The user inputs an email that is changed to the same email but with the adress "@hotmail"
 */
 
 using System;
@@ -18,17 +18,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace _312551
+namespace _312551Email
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        double input;
-        double converted;
-        double answer;
-        bool truefalse
+        List<string> adress = new List<string>();
+        string output;
+        int i;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -36,45 +36,35 @@ namespace _312551
 
         private void btnClick_Click(object sender, RoutedEventArgs e)
         {
-            
-            double.TryParse(txtInput.Text, out input);
-            if(input == 0)
+            int i = 0;
+            output = null;
+            string temp;
+            string input = txtInput.Text;
+            while (i < txtInput.Text.Length)
             {
-                MessageBox.Show("Please enter a number between 0 and 360");
-            }
-            
-            if (chkConvert.IsChecked == false)
-            {
-                converted = input;
-            }
 
-            if (rbSin.IsChecked == true)
-            {
-                answer = Math.Sin(converted);
+
+                temp = input.Substring(i, 1);
+                adress.Add(temp);
+                //MessageBox.Show(adress[i]);
+
+
+                if (adress[i].Contains("@"))
+                {
+                    //MessageBox.Show("STOP");
+                    foreach (string adress in adress)
+                    {
+                        output += adress;
+                    }
+                    txtInput.Text = (output + "hotmail.com");
+                    adress.Clear();
+                    return;
+                }
+                else
+                {
+                    i++;
+                }
             }
-
-            else if (rbCos.IsChecked == true)
-            {
-                answer = Math.Cos(converted);
-
-            }
-            else if (rbTan.IsChecked == true)
-            {
-                answer = Math.Tan(converted);
-            }
-
-            Console.WriteLine(answer.ToString());
-
-            if (rbSin.IsChecked == false & rbCos.IsChecked == false & rbTan.IsChecked == false)
-            {
-                MessageBox.Show("Please select a function.");
-            }
-            
-        }
-
-        private void chkConvert_Checked(object sender, RoutedEventArgs e)
-        {
-            converted = (input * Math.PI) / 180;
         }
     }
 }
